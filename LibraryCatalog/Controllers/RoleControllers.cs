@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using LibraryCatalog.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LibraryCatalog.Controllers
 {
@@ -64,7 +65,7 @@ namespace LibraryCatalog.Controllers
         IdentityRole role = await roleManager.FindByIdAsync(id);
         List<ApplicationUser> members = new List<ApplicationUser>();
         List<ApplicationUser> nonMembers = new List<ApplicationUser>();
-        foreach (ApplicationUser user in userManager.Users)
+        foreach (ApplicationUser user in userManager.Users.ToList())
         {
             var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
             list.Add(user);
